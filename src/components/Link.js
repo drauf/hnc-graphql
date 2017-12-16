@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { timeDifferenceForDate } from '../utils'
+import moment from 'moment'
 import { GC_USER_ID } from '../constants'
 
 class Link extends Component {
@@ -29,7 +29,7 @@ class Link extends Component {
       + ' votes by '
       + (this.props.link.postedBy ? this.props.link.postedBy.name : 'Unknown')
       + ' '
-      + timeDifferenceForDate(this.props.link.createdAt)
+      + moment(this.props.link.createdAt).fromNow()
     )
   }
 
