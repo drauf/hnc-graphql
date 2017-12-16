@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 import { GC_USER_ID, GC_AUTH_TOKEN } from '../constants'
 
 class Login extends Component {
@@ -41,7 +43,7 @@ class Login extends Component {
         <div className='flex mt3'>
           <div
             className='pointer mr2 button'
-            onClick={this._confirm}
+            onClick={this._submit}
           >
             {this.state.login ? 'login' : 'create account'}
           </div>
@@ -56,10 +58,7 @@ class Login extends Component {
     )
   }
 
-  _confirm = async () => {
-  }
-
-  _handleChange = ({target}) => {
+  _handleChange = ({ target }) => {
     this.setState({
       [target.id]: target.value
     })
@@ -71,6 +70,40 @@ class Login extends Component {
     })
   }
 
+  _submit = async () => {
+    if (this.state.login) {
+      await this._authenticateUser()
+    } else {
+      await this._signupUser()
+    }
+    this.props.history.push('/')
+  }
+
+  _authenticateUser = async () => {
+    const { email, password } = this.state
+    const result = await this.props.authenticateUserMutation({
+      variables: {
+        email,
+        password
+      }
+    })
+    const { id, token } = result.data.authenticateUser
+    this._saveUserData(id, token)
+  }
+
+  _signupUser = async () => {
+    const { name, email, password } = this.state
+    const result = await this.props.signupUserMutation({
+      variables: {
+        name,
+        email,
+        password
+      }
+    })
+    const { id, token } = result.data.signupUser
+    this._saveUserData(id, token)
+  }
+
   _saveUserData = (id, token) => {
     localStorage.setItem(GC_USER_ID, id)
     localStorage.setItem(GC_AUTH_TOKEN, token)
@@ -78,4 +111,32 @@ class Login extends Component {
 
 }
 
-export default Login
+const SIGNUP_USER_MUTATION = gql`
+  mutation SignupUserMutation($email: String!, $password: String!, $name: String!) {
+    signupUser(
+      email: $email,
+      password: $password,
+      name: $name
+    ) {
+      id
+      token
+    }
+  }
+`
+
+const AUTHENTICATE_USER_MUTATION = gql`
+  mutation AuthenticateUserMutation($email: String!, $password: String!) {
+    authenticateUser(
+      email: $email,
+      password: $password
+    ) {
+      id
+      token
+    }
+  }
+`
+
+export default compose(
+  graphql(SIGNUP_USER_MUTATION, { name: 'signupUserMutation' }),
+  graphql(AUTHENTICATE_USER_MUTATION, { name: 'authenticateUserMutation' })
+)(Login)
