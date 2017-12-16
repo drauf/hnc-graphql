@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import moment from 'moment'
 import { GC_USER_ID } from '../constants'
 
@@ -34,8 +36,29 @@ class Link extends Component {
   }
 
   _voteForLink = async () => {
+    const userId = localStorage.getItem(GC_USER_ID)
+    const voterIds = this.props.link.votes.map(vote => vote.user.id)
+    if (voterIds.includes(userId)) {
+      console.log(`User (${userId}) already voted for this link.`)
+      return
+    }
+
+    const linkId = this.props.link.id
+    await this.props.voteMutation({
+      variables: {
+        linkId
+      }
+    })
   }
 
 }
 
-export default Link
+const VOTE_MUTATION = gql`
+  mutation VoteMutation($linkId: ID!) {
+    vote(linkId: $linkId) {
+      id
+    }
+  }
+`
+
+export default graphql(VOTE_MUTATION, { name: 'voteMutation' })(Link)

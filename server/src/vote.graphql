@@ -1,0 +1,7 @@
+type VotePayload {
+  id: ID!
+}
+
+extend type Mutation {
+  vote(linkId: ID!): VotePayload
+}

@@ -38,6 +38,9 @@ const ALL_LINKS_QUERY = gql`
       }
       votes {
         id
+        user {
+          id
+        }
       }
     }
   }
