@@ -1,6 +1,18 @@
 types: ./types.graphql
 
 
+permissions:
+  - operation: Link.read
+
+  - operation: Link.create
+    authenticated: true
+
+  - operation: User.read
+    fields:
+      - name
+      - links
+
+
 functions:
 
   signup:
@@ -26,7 +38,3 @@ functions:
     schema: src/hello.graphql
     handler:
       code: src/hello.js
-
-
-permissions:
-  - operation: "*"
