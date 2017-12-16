@@ -8,9 +8,7 @@ permissions:
     authenticated: true
 
   - operation: User.read
-    fields:
-      - name
-      - links
+    fields: [name, links]
 
 
 functions:
