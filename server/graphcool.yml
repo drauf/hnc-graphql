@@ -10,6 +10,8 @@ permissions:
   - operation: User.read
     fields: [name, links]
 
+  - operation: Vote.read
+
 
 functions:
 
