@@ -19,23 +19,26 @@ class Login extends Component {
         <div className='flex flex-column'>
           {!this.state.login &&
             <input
+              className='mb2'
               id="name"
               value={this.state.name}
-              onChange={this._handleChange}
+              onChange={this._handleInputChange}
               type='text'
               placeholder='Your name'
             />}
           <input
+            className='mb2'
             id="email"
             value={this.state.email}
-            onChange={this._handleChange}
+            onChange={this._handleInputChange}
             type='text'
             placeholder='Your email address'
           />
           <input
+            className='mb2'
             id="password"
             value={this.state.password}
-            onChange={this._handleChange}
+            onChange={this._handleInputChange}
             type='password'
             placeholder='Choose a safe password'
           />
@@ -58,7 +61,7 @@ class Login extends Component {
     )
   }
 
-  _handleChange = ({ target }) => {
+  _handleInputChange = ({ target }) => {
     this.setState({
       [target.id]: target.value
     })

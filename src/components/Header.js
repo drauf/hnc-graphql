@@ -21,17 +21,19 @@ class Header extends Component {
         </div>
         <div className='flex flex-fixed'>
           {userId ?
-            <div className='ml1 pointer black' onClick={() => {
-              localStorage.removeItem(GC_USER_ID)
-              localStorage.removeItem(GC_AUTH_TOKEN)
-              this.props.history.push(`/`)
-            }}>logout</div>
+            <div className='ml1 pointer black' onClick={this._logout}>logout</div>
             :
             <Link to='/login' className='ml1 no-underline black'>login</Link>
           }
         </div>
       </div>
     )
+  }
+
+  _logout = () => {
+    localStorage.removeItem(GC_USER_ID)
+    localStorage.removeItem(GC_AUTH_TOKEN)
+    this.props.history.push(`/`)
   }
 
 }

@@ -16,26 +16,35 @@ class CreateLink extends Component {
         <div className='flex flex-column mt3'>
           <input
             className='mb2'
+            id='description'
             value={this.state.description}
-            onChange={(e) => this.setState({ description: e.target.value })}
+            onChange={this._handleInputChange}
             type='text'
             placeholder='A description for the link'
           />
           <input
             className='mb2'
+            id='url'
             value={this.state.url}
-            onChange={(e) => this.setState({ url: e.target.value })}
+            onChange={this._handleInputChange}
             type='text'
             placeholder='The URL for the link'
           />
         </div>
         <button
-          onClick={() => this._createLink()}
+          className='pointer button'
+          onClick={this._createLink}
         >
           Submit
         </button>
       </div>
     )
+  }
+
+  _handleInputChange = ({ target }) => {
+    this.setState({
+      [target.id]: target.value
+    })
   }
 
   _createLink = async () => {
