@@ -48,6 +48,9 @@ class Link extends Component {
       variables: {
         linkId,
         userId
+      },
+      update: (store, { data: { createVote } }) => {
+        this.props.updateStoreAfterVote(store, createVote, linkId)
       }
     })
   }
@@ -58,6 +61,17 @@ const CREATE_VOTE_MUTATION = gql`
   mutation CreateVoteMutation($linkId: ID!, $userId: ID!) {
     createVote(linkId: $linkId, userId: $userId) {
       id
+      link {
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
     }
   }
 `
