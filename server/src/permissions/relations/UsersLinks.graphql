@@ -1,0 +1,9 @@
+query ($user_id: ID!, $postedByUser_id: ID!) {
+  SomeUserExists(filter: {
+    AND: [{
+      id: $user_id
+    }, {
+      id: $postedByUser_id
+    }]
+  })
+}

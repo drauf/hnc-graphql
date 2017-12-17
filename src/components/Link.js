@@ -44,21 +44,22 @@ class Link extends Component {
     }
 
     const linkId = this.props.link.id
-    await this.props.voteMutation({
+    await this.props.createVoteMutation({
       variables: {
-        linkId
+        linkId,
+        userId
       }
     })
   }
 
 }
 
-const VOTE_MUTATION = gql`
-  mutation VoteMutation($linkId: ID!) {
-    vote(linkId: $linkId) {
+const CREATE_VOTE_MUTATION = gql`
+  mutation CreateVoteMutation($linkId: ID!, $userId: ID!) {
+    createVote(linkId: $linkId, userId: $userId) {
       id
     }
   }
 `
 
-export default graphql(VOTE_MUTATION, { name: 'voteMutation' })(Link)
+export default graphql(CREATE_VOTE_MUTATION, { name: 'createVoteMutation' })(Link)

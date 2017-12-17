@@ -1,0 +1,11 @@
+query ($user_id: ID!, $votesVote_id: ID!) {
+  SomeUserExists(filter: {
+    AND: [{
+      id: $votesVote_id
+    }, {
+      user: {
+        id: $user_id
+      }
+    }]
+  })
+}

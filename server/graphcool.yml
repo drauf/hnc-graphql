@@ -6,14 +6,24 @@ permissions:
   - operation: Link.create
     authenticated: true
 
-  # todo: add permission query
-  - operation: UsersLinks.connect
-    authenticated: true
-
   - operation: User.read
     fields: [id, name, links]
 
   - operation: Vote.read
+  - operation: Vote.create
+    authenticated: true
+
+  - operation: UsersLinks.connect
+    authenticated: true
+    query: src/permissions/relations/UsersLinks.graphql
+
+  - operation: UsersVotes.connect
+    authenticated: true
+    query: src/permissions/relations/UsersVotes.graphql
+
+  - operation: VotesOnLink.connect
+    authenticated: true
+    # query: src/permissions/relations/VotesOnLink.graphql
 
 
 functions:
@@ -35,9 +45,3 @@ functions:
     schema: src/email-password/loggedInUser.graphql
     handler:
       code: src/email-password/loggedInUser.ts
-
-  vote:
-    type: resolver
-    schema: src/vote.graphql
-    handler:
-      code: src/vote.ts
