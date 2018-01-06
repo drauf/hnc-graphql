@@ -16,11 +16,13 @@ class Search extends Component {
         <div>
           Search
           <input
+            className='ml2'
             id='searchText'
             type='text'
             onChange={this._handleInputChange}
           />
           <button
+            className='ml1'
             onClick={this._executeSearch}
           >
             OK
