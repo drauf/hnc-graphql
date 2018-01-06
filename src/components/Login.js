@@ -20,7 +20,7 @@ class Login extends Component {
           {!this.state.login &&
             <input
               className='mb2'
-              id="name"
+              id='name'
               value={this.state.name}
               onChange={this._handleInputChange}
               type='text'
@@ -28,7 +28,7 @@ class Login extends Component {
             />}
           <input
             className='mb2'
-            id="email"
+            id='email'
             value={this.state.email}
             onChange={this._handleInputChange}
             type='text'
@@ -36,7 +36,7 @@ class Login extends Component {
           />
           <input
             className='mb2'
-            id="password"
+            id='password'
             value={this.state.password}
             onChange={this._handleInputChange}
             type='password'
